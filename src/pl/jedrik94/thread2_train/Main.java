@@ -17,8 +17,17 @@ class Job extends Thread {
         return count;
     }
 
-    public static synchronized void addCount() {
-        count++;
+    public void addCount() {
+        synchronized(Main.class){
+            // To powinno też dzialac
+            count++;
+        }
+
+    }
+
+    @Override
+    public String toString() {
+        return getName();
     }
 }
 
@@ -27,13 +36,19 @@ public class Main {
 
         Job job = new Job();
         Job job1 = new Job();
+        Job job2 = new Job();
+        Job job3 = new Job();
 
-        job1.start();
         job.start();
+        job1.start();
+        job2.start();
+        job3.start();
 
         try {
             job.join();
             job1.join();
+            job2.join();
+            job3.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
